@@ -117,6 +117,20 @@ def calculate_stock_data(data):
     
     return new_stock_data
 
+def stock_data_as_dictionary(stock_data):
+    
+    """
+    converts stock_data into a dictionary
+    """
+    
+    stock_sheet_cols = []
+    stock_sheet_cols = SHEET.worksheet('stock').row_values(1)
+    stock_data_dictionary = {}
+    for item, qty in zip(stock_sheet_cols, stock_data):
+        stock_data_dictionary[item] = qty
+    
+    print(stock_data_dictionary)
+
 def main():
 
     """
@@ -125,12 +139,13 @@ def main():
 
     data = get_sales_data()
     sales_data = [int(val) for val in data]
-    update_worksheet(sales_data, 'sales')
+    #update_worksheet(sales_data, 'sales')
     new_surplus_data = calculate_surplus_data(sales_data)
-    update_worksheet(new_surplus_data, 'surplus')
+    #update_worksheet(new_surplus_data, 'surplus')
     sales_column = get_last_5_entries_sales()
     stock_data = calculate_stock_data(sales_column)
-    update_worksheet(stock_data, 'stock')
+    stock_data_as_dictionary(stock_data)
+    #update_worksheet(stock_data, 'stock')
 
 
 print('welcome to love sandwiches data automation')
