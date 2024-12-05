@@ -93,13 +93,29 @@ def get_last_5_entries_sales():
     the last 5 entries for each sandwich and returns the data
     as a list of lists
     """
-
+    
+    sales = SHEET.worksheet('sales')
     columns = []
-    for (ind in range[1, 7]):
+    for ind in range(1, 7):
         column = sales.col_values(ind)
         columns.append(column[-5:])
     
     return columns
+
+def calculate_stock_data(data):
+    """
+    calculate the average stock for each item type, adding 10%
+    """
+
+    print('calculating stock data...\n')
+    new_stock_data = []
+    for col in data:
+        int_col = [int(num) for num in col]
+        avg = sum(int_col) / len(int_col)
+        stock_num = avg * 1.1
+        new_stock_data.append(round(stock_num))
+    
+    return new_stock_data
 
 def main():
 
@@ -112,7 +128,9 @@ def main():
     update_worksheet(sales_data, 'sales')
     new_surplus_data = calculate_surplus_data(sales_data)
     update_worksheet(new_surplus_data, 'surplus')
-    get_last_5_entries_sales()
+    sales_column = get_last_5_entries_sales()
+    stock_data = calculate_stock_data(sales_column)
+    update_worksheet(stock_data, 'stock')
 
 
 print('welcome to love sandwiches data automation')
