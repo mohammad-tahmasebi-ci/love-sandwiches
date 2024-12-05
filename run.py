@@ -56,12 +56,19 @@ def validate_data(values):
     return True
 
 def update_worksheet(data, worksheet):
+
+    """
+    update sales and surplus worksheets based on data
+    provided by the user
+    """
+
     print(f'update {worksheet} worksheet...\n')
     worksheet_to_update = SHEET.worksheet(worksheet)
     worksheet_to_update.append_row(data)
     print(f'{worksheet} worksheet updated successfully\n')
 
 def calculate_surplus_data(sales_row):
+
     """
     compare sales with stock and calculate the surplus for each item type
 
@@ -79,6 +86,21 @@ def calculate_surplus_data(sales_row):
         surplus_data.append(surplus)
     return surplus_data
 
+def get_last_5_entries_sales():
+    
+    """
+    collect columns of data from sales worksheet, collecting
+    the last 5 entries for each sandwich and returns the data
+    as a list of lists
+    """
+
+    columns = []
+    for (ind in range[1, 7]):
+        column = sales.col_values(ind)
+        columns.append(column[-5:])
+    
+    return columns
+
 def main():
 
     """
@@ -90,6 +112,7 @@ def main():
     update_worksheet(sales_data, 'sales')
     new_surplus_data = calculate_surplus_data(sales_data)
     update_worksheet(new_surplus_data, 'surplus')
+    get_last_5_entries_sales()
 
 
 print('welcome to love sandwiches data automation')
