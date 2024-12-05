@@ -35,7 +35,8 @@ def get_sales_data():
         sales_data = data_str.split(',')
         if validate_data(sales_data):
             break
-        
+    
+    return sales_data
 
 def validate_data(values):
 
@@ -46,13 +47,12 @@ def validate_data(values):
     """
 
     try:
-        [int(val) for val in values]
+        values = [int(val) for val in values]
         if len(values) != 6:
             raise ValueError(f'Exactly 6 values is required, you provided {len(values)}')
     except ValueError as e:
         print(f'Invalid data: {e}, please try again.\n')
         return False
-    
     return True
         
 def update_sales_worksheet(data):
@@ -92,3 +92,5 @@ def main():
 
 print('welcome to love sandwiches data automation')
 main()
+
+
